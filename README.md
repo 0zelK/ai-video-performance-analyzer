@@ -1,23 +1,99 @@
-# Coop-AI-project
-This is a repository for my COOP AI Project of summer 2025
-French description follows:
+# AI-Powered Video Performance Analyzer
 
-Après discussion, nous avons convenu que je travaillerai de manière autonome sur un projet visant à développer et entraîner une intelligence artificielle capable d’appliquer des techniques d’analyse de données sur des ensembles de données vidéos de médias sociaux. Les données incluront notamment :
+This is a web app that predicts the potential reach of a video **before it’s published**, using only its **metadata** (title, description, keywords, duration, etc.).
 
-Le temps de visionnement
-La miniature
-La durée de la vidéo
-Le nombre de vues, likes, partages, etc.
+This was built as part of an AI internship in the **R&D department** to explore how pre-upload metadata can estimate video performance.  
+The project includes data cleaning, feature engineering, model training, and full-stack deployment.
 
-L’objectif est de permettre à l’IA d’analyser ces données et de produire des insights pertinents sur les performances des vidéos.
-Il est important de noter que ce système est particulièrement destiné aux créateurs de contenu sur les réseaux sociaux. Cela aura pour but de les aider à comprendre quel type de vidéo fonctionne le mieux pour leur audience, identifier les facteurs de succès, ou peut être même décider d’explorer une nouvelle “niche” de contenu.
+## Overview
 
-Organisation du projet:
+The tool estimates video performance based on metadata through two specialized models:
+- **Long-form model (YouTube videos ≥180s): RMSE ≈ 1.24
+- **Short-form model (TikTok and Shorts <180s): RMSE ≈ 1.63
+It provides users with estimated performance scores and practical feedback on metadata quality.
 
-Je travaillerai de manière indépendante sans équipe
-Je fixerai moi-même les échéances pour chaque tâche
-Des rapports seront rédigés à la fin de chaque appel ou tâche terminée.
-Des appels avec l’encadrant seront organisés au fur et à mesure que le projet évolue
-Un Github repository sera mis en place pour garder le travail organisé et pour documenter l’évolution du projet de A-Z
-Une feuille de suivi sera mise en place via Google Sheets. Celle-ci contiendra: les tâches, le représentant (moi-même), le statut de chaque tâche, sa deadline prévue, la date de réalisation , et un lien vers le rapport correspondant.
+## Technologies
 
+**Languages:** Python, JavaScript, HTML/CSS/CSS  
+**Frameworks and Libraries:** FastAPI, LightGBM, SentenceTransformers, Pandas, NumPy, Scikit-learn  
+**Tools:** ffprobe, Joblib, Uvicorn
+
+## Data and Model
+
+### Datasets
+Three public datasets were combined and cleaned (≈155K total entries):
+- YouTube 131K Dataset: https://huggingface.co/datasets/vargr/youtube  
+- YouTube Shorts/Longs Dataset: https://www.kaggle.com/datasets/taimoor888/youtube-long-vs-shorts-video-analysis?
+- TikTok Metadata Dataset: https://www.kaggle.com/datasets/raminhuseyn/dataset-from-tiktok
+
+### Feature Engineering
+- Text features: title/description lengths, word counts, stopword ratios, capitalization and punctuation ratios  
+- Numeric features: duration, duration category, missing-data flags  
+- **Text embeddings:** 384-dimensional SentenceTransformer vectors for title, description, and keywords  
+
+### Model Training
+- Algorithm: LightGBM  
+- Optimized parameters: `num_leaves`, `max_depth`, `feature_fraction`, `learning_rate`, `n_estimators`  
+- Train/validation split: 85 / 15  
+- Metric: RMSE
+
+Note: The use of text embeddings improved validation error by about **35%**, allowing the model to interpret semantic relationships instead of memorizing text patterns.
+
+## Backend Pipeline
+
+1. Receives metadata and optional video file from the user  
+2. Extracts duration using `ffprobe`  
+3. Reproduces feature-engineering steps used in training  
+4. Generates text embeddings for title, description, and keywords  
+5. Combines all features into a single vector  
+6. Loads the corresponding LightGBM model (long or short)  
+7. Returns prediction and feedback in JSON format
+
+## Model Interpretation and Feedback
+
+- I used SHAP to identify which features most influenced the prediction outputs.
+- For long-form videos, the most impactful variables included text embeddings (title, description, keywords), duration, and the title-to-description length ratio.
+- These insights were used to design the app’s feedback system, which compares the user’s metadata against top 10% performers in the dataset and generates improvement suggestions based on averaged high-performing values.
+
+## Frontend
+
+A minimal HTML/CSS/JavaScript interface:
+- Dark-theme layout  
+- Model selection (long or short)  
+- Input form for metadata and video upload  
+- Dynamic result display with estimated views and feedback
+
+## Results Summary
+
+| Model Type | Dataset Size | Validation RMSE | Notes                          |
+|-------------|--------------|----------------|--------------------------------|
+| Long-form   | 100K+ rows   | 1.24           | Consistent and accurate        |
+| Short-form  | 55K+ rows    | 1.63           | Higher noise, less predictable |
+
+## Limitations
+
+- Based only on metadata (no thumbnail, trend, or recommendation signals)  
+- Limited to YouTube and TikTok datasets  
+- Short-form results affected by noise and missing text information
+
+## Installation
+
+### Requirements
+- Python 3.10+  
+- ffmpeg (with `ffprobe` available in PATH)  
+- Modern web browser  
+
+### Dependencies (bash)
+pip install fastapi uvicorn joblib sentence-transformers torch numpy pandas scikit-learn lightgbm python-multipart ffmpeg-python
+
+## Running the project
+
+You will need 2 terminals for this. 
+- In the first terminal, navigate to the project's backend folder, then run:
+uvicorn main:app --reload
+
+- In the second terminal, navigate to the project's frontend folder, then run:
+python3 -m http.server 3000
+
+- Then, open "http://localhost:3000" in your browser.
+- You're done!
