@@ -1,13 +1,13 @@
 # AI-Powered Video Performance Analyzer
 
-This is a web app that predicts the potential reach of a video **before it’s published**, using only its **metadata** (title, description, keywords, duration, etc.).
+This is a web app that predicts the potential reach of a video before it’s published, using only its metadata (title, description, keywords, duration, etc.).
 
 This was built as part of an AI internship in the **R&D department** to explore how pre-upload metadata can estimate video performance.  
 The project includes data cleaning, feature engineering, model training, and full-stack deployment.
 
 ## Overview
 
-The tool estimates video performance based on metadata through two specialized models:
+The tool estimates video performance based on metadata through two specialized models trained on different datasets:
 - **Long-form model (YouTube videos ≥180s): RMSE ≈ 1.24
 - **Short-form model (TikTok and Shorts <180s): RMSE ≈ 1.63
 It provides users with estimated performance scores and practical feedback on metadata quality.
