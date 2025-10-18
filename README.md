@@ -1,4 +1,4 @@
-# AI-Powered Video Performance Analyzer
+# AI Video Performance Analyzer
 
 This is a web app that predicts the potential reach of a video before it’s published, using only its metadata (title, description, keywords, duration, etc.).
 
@@ -103,4 +103,5 @@ python3 -m http.server 3000
 ## Note
 
 Make sure to check out this google drive link: https://drive.google.com/drive/folders/1LBNjx4ZfpIdIFivf948Ax3Ogo5yCpbXD?usp=sharing.
+
 I have included in it both .pkl models (which you need to run the app), the scripts and helper functions I used along the way, and the data including both the raw and cleaned datasets.
