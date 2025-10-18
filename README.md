@@ -81,7 +81,8 @@ A minimal HTML/CSS/JavaScript interface:
 ### Requirements
 - Python 3.10+  
 - ffmpeg (with `ffprobe` available in PATH)  
-- Modern web browser  
+- Modern web browser
+- Download the '\models' folder and add it to the app directory. You can find it in this link: https://drive.google.com/drive/folders/1LBNjx4ZfpIdIFivf948Ax3Ogo5yCpbXD?usp=sharing
 
 ### Dependencies (bash)
 pip install fastapi uvicorn joblib sentence-transformers torch numpy pandas scikit-learn lightgbm python-multipart ffmpeg-python
@@ -97,3 +98,9 @@ python3 -m http.server 3000
 
 - Then, open "http://localhost:3000" in your browser.
 - You're done!
+
+
+## Note
+
+Make sure to check out this google drive link: https://drive.google.com/drive/folders/1LBNjx4ZfpIdIFivf948Ax3Ogo5yCpbXD?usp=sharing.
+I have included in it both .pkl models (which you need to run the app), the scripts and helper functions I used along the way, and the data including both the raw and cleaned datasets.
