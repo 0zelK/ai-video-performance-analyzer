@@ -1,0 +1,17 @@
+{
+    "title_desc_len_ratio": {
+        "avg_all": 0.8278172130888092,
+        "avg_top10": 0.5049105864800878,
+        "impact_score": 0.16570491938212398
+    },
+    "desc_len": {
+        "avg_all": 117.4802,
+        "avg_top10": 140.356,
+        "impact_score": 0.118867996588705
+    },
+    "title_stopword_ratio": {
+        "avg_all": 0.17747338468037996,
+        "avg_top10": 0.17068162223397515,
+        "impact_score": 0.0657843947796215
+    }
+}

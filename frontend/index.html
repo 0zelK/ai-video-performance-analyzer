@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prédiction de Performance Vidéo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Header with project title and dropdown -->
+   <header id="header" class="hidden">
+    <div class="header-row">
+      <h1 class="header-title">Analyse de performance vidéo IA</h1>
+      <div class="model-selector-dropdown">
+        <select id="model-select">
+          <option value="long">Analyse de performance : Format Long</option>
+          <option value="short">Analyse de performance : Format Court</option>        
+        </select>
+      </div>
+    </div>
+  </header>
+  
+
+  <!-- Initial screen: Radar-style model selection -->
+  <main id="main-selection">
+    <div id="welcome">
+      <h2>Bienvenue</h2>
+      <p>Choisissez votre modèle d’analyse</p>
+    </div>
+    <div class="model-selection-banner">
+      <button id="btn-long" class="model-btn">Format Long</button>
+      <button id="btn-short" class="model-btn">Format Court</button>
+    </div>
+  </main>
+  
+
+  <!-- Input form -->
+  <section id="form-section" class="hidden">
+    <h1 id="form-title" class="model-banner-title">Sélectionnez un format pour commencer</h1>
+    <form id="video-form">
+      <div class="input-group">
+        <label for="title">Titre de la vidéo</label>
+        <input type="text" id="title" name="title" />
+      </div>
+
+      <div class="input-group">
+        <label for="description">Description</label>
+        <textarea id="description" name="description"></textarea>
+      </div>
+
+      <div class="input-group" id="keywords-group">
+        <label for="keywords">Mots-clés</label>
+        <input type="text" id="keywords" name="keywords" />
+      </div>
+
+      <div class="input-group">
+        <label for="video">Fichier vidéo (.mp4)</label>
+        <input type="file" id="video" name="video" accept=".mp4" />
+      </div>
+
+      <button type="submit" id="predict-btn">Prédire performance</button>
+    </form>
+  </section>
+
+  <!-- Result display -->
+  <section id="result-section" class="hidden">
+    <div id="result-main-message" class="fade-in-block">
+      <div id="main-text">Votre vidéo va très bien performer !</div>
+      <div id="predicted-views">~128K vues estimées~</div>
+    </div>    
+    <div id="feedback-cards-container"></div>
+    <button id="show-plots-btn">Voir l'analyse graphique détaillée</button>
+  </section>
+
+  <!-- Plot section -->
+  <section id="plots-section" class="hidden">
+    <h2>Analyse Graphique</h2>
+    <canvas id="plot-canvas"></canvas>
+  <p id="model-info" class="model-info-text"></p>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
