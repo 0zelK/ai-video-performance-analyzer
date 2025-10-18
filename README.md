@@ -105,3 +105,4 @@ python3 -m http.server 3000
 Make sure to check out this google drive link: https://drive.google.com/drive/folders/1LBNjx4ZfpIdIFivf948Ax3Ogo5yCpbXD?usp=sharing.
 
 I have included in it both .pkl models (which you need to run the app), the scripts and helper functions I used along the way, and the data including both the raw and cleaned datasets.
+You only need the '\models' folder to run the app though, the other folders are there only for documention.
